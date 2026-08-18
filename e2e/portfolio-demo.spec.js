@@ -13,6 +13,11 @@ test('renders all synthetic demo views without production network traffic', asyn
   await expect(page.getByText('DEMO / SYNTHETIC DATA')).toBeVisible()
   await expect(page.getByTestId('portfolio-demo-live')).toBeVisible()
 
+  const localClock = page.locator('.demo-meta time')
+  await expect(localClock).toHaveText(/^\d{4}\.\d{2}\.\d{2}\s{2}\d{2}:\d{2}:\d{2}$/)
+  const initialClock = await localClock.textContent()
+  await expect.poll(() => localClock.textContent()).not.toBe(initialClock)
+
   await page.getByRole('button', { name: /历史追溯/ }).click()
   await expect(page.getByTestId('portfolio-demo-trace')).toBeVisible()
 

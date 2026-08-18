@@ -23,7 +23,7 @@
 
       <div class="demo-meta">
         <span class="demo-online"><i></i>系统在线</span>
-        <span>2026.08.17&nbsp;&nbsp;14:32:08</span>
+        <time :datetime="currentTimeIso" :title="`用户当前时区：${localTimeZone}`">{{ currentLocalTime }}</time>
       </div>
     </header>
 
@@ -301,6 +301,10 @@ export default {
       selectedDefectId: 'd2',
       selectedRecordId: historyRecords[0].id,
       surfaceImageUrl: '/demo/synthetic-line-scan-surface.png',
+      currentLocalTime: '',
+      currentTimeIso: '',
+      localTimeZone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'Local time',
+      clockTimer: null,
       defects,
       historyRecords,
       contextItems: [
@@ -352,6 +356,15 @@ export default {
     },
   },
   methods: {
+    formatLocalTime(date) {
+      const pad = (value) => String(value).padStart(2, '0')
+      return `${date.getFullYear()}.${pad(date.getMonth() + 1)}.${pad(date.getDate())}  ${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`
+    },
+    updateLocalTime() {
+      const now = new Date()
+      this.currentLocalTime = this.formatLocalTime(now)
+      this.currentTimeIso = now.toISOString()
+    },
     selectCameraDefect(cameraNo) {
       const linked = this.defects.find((item) => item.cameraNo === cameraNo)
       if (linked) this.selectedDefectId = linked.id
@@ -360,8 +373,11 @@ export default {
   mounted() {
     this.previousDocumentTitle = document.title
     document.title = '工业表面视觉检测工作站 / DEMO'
+    this.updateLocalTime()
+    this.clockTimer = window.setInterval(this.updateLocalTime, 1000)
   },
   beforeUnmount() {
+    if (this.clockTimer) window.clearInterval(this.clockTimer)
     if (this.previousDocumentTitle) document.title = this.previousDocumentTitle
   },
 }

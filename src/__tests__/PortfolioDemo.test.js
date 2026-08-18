@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import PortfolioDemo from '@/views/demo/PortfolioDemo.vue'
 
@@ -18,6 +18,10 @@ function createVm() {
 }
 
 describe('PortfolioDemo', () => {
+  afterEach(() => {
+    vi.useRealTimers()
+  })
+
   it('starts in the synthetic live-inspection view', () => {
     const vm = createVm()
 
@@ -53,5 +57,19 @@ describe('PortfolioDemo', () => {
 
     PortfolioDemo.beforeUnmount.call(vm)
     expect(document.title).toBe('Production title')
+  })
+
+  it('shows and updates the browser-local time every second', () => {
+    vi.useFakeTimers()
+    vi.setSystemTime(new Date(2026, 7, 18, 10, 30, 15))
+    const vm = createVm()
+
+    PortfolioDemo.mounted.call(vm)
+    expect(vm.currentLocalTime).toBe('2026.08.18  10:30:15')
+
+    vi.advanceTimersByTime(1000)
+    expect(vm.currentLocalTime).toBe('2026.08.18  10:30:16')
+
+    PortfolioDemo.beforeUnmount.call(vm)
   })
 })
