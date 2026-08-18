@@ -15,6 +15,7 @@ test('renders all synthetic demo views without production network traffic', asyn
 
   const localClock = page.locator('.demo-meta time')
   await expect(localClock).toHaveText(/^\d{4}\.\d{2}\.\d{2}\s{2}\d{2}:\d{2}:\d{2}$/)
+  await expect(localClock).toHaveCSS('width', '176px')
   const initialClock = await localClock.textContent()
   await expect.poll(() => localClock.textContent()).not.toBe(initialClock)
 

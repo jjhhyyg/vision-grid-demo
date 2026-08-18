@@ -438,6 +438,7 @@ button { color: inherit; font: inherit; }
 
 .demo-meta { justify-self: end; display: flex; align-items: center; gap: 24px; color: var(--muted); font-size: 11px; letter-spacing: .08em; }
 .demo-online { display: flex; align-items: center; gap: 8px; color: var(--text); }
+.demo-meta time { flex: 0 0 176px; inline-size: 176px; text-align: right; white-space: pre; font-variant-numeric: tabular-nums; }
 .demo-online i, .stream-meta i { width: 7px; height: 7px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 0 5px rgba(130,213,206,.08); animation: statusPulse 2.2s ease-in-out infinite; }
 
 .demo-disclosure { height: 34px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 9px; letter-spacing: .11em; }
@@ -631,7 +632,7 @@ button { color: inherit; font: inherit; }
 
 @media (max-width: 720px) {
   .demo-workstation { padding-inline: 12px; }
-  .demo-brand span:last-child, .demo-meta > span:last-child { display: none; }
+  .demo-brand span:last-child, .demo-meta time { display: none; }
   .demo-meta { gap: 8px; }
   .demo-nav button { min-width: 0; font-size: 11px; }
   .demo-disclosure p { display: none; }
