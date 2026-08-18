@@ -300,7 +300,7 @@ export default {
       activeView: 'live',
       selectedDefectId: 'd2',
       selectedRecordId: historyRecords[0].id,
-      surfaceImageUrl: `${import.meta.env.BASE_URL}demo/synthetic-line-scan-surface.png`,
+      surfaceImageUrl: '/demo/synthetic-line-scan-surface.png',
       defects,
       historyRecords,
       contextItems: [

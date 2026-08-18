@@ -23,6 +23,7 @@ describe('PortfolioDemo', () => {
 
     expect(vm.activeView).toBe('live')
     expect(vm.selectedDefect.code).toBe('A-02')
+    expect(vm.surfaceImageUrl).toBe('/demo/synthetic-line-scan-surface.png')
     expect(vm.contextItems.every((item) => !/客户|公司|集团|192\.168|172\.18|10\.\d+/.test(item.value))).toBe(true)
   })
 
